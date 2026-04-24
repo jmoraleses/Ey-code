@@ -4,6 +4,7 @@ packages/opencode/dist/
 packages/*/dist/
 .memory/
 .github/
+sdks/
 
 .DS_Store
 node_modules
