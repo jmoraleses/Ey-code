@@ -1,11 +1,11 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "model": "local-coder/default_model",
-  "small_model": "local-coder/default_model",
+  "small_model": "local-tools/default_model",
   "provider": {
     "local-main": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Local MLX Main",
+      "name": "",
       "options": {
         "baseURL": "http://localhost:8080/v1",
         "apiKey": "local"
@@ -26,7 +26,7 @@
     },
     "local-coder": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Local MLX Coder",
+      "name": "",
       "options": {
         "baseURL": "http://localhost:8081/v1",
         "apiKey": "local"
@@ -47,7 +47,7 @@
     },
     "local-tools": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Local MLX Agentic",
+      "name": "",
       "options": {
         "baseURL": "http://localhost:8082/v1",
         "apiKey": "local"
@@ -68,7 +68,7 @@
     },
     "local-math": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Local MLX Math",
+      "name": "",
       "options": {
         "baseURL": "http://localhost:8083/v1",
         "apiKey": "local"

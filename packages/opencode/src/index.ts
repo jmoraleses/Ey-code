@@ -63,11 +63,14 @@ async function cleanupMemory() {
       })
     }
     
-    // Kill all Python processes related to MLX
-    exec(`pkill -f "mlx_lm.server" 2>/dev/null`, (error: any) => {
+    // Kill all Python processes related to MLX (more comprehensive)
+    exec(`pkill -f "mlx_lm" 2>/dev/null`, (error: any) => {
       // Ignore errors
     })
-    exec(`pkill -f "lazy-mlx.py" 2>/dev/null`, (error: any) => {
+    exec(`pkill -f "lazy-mlx" 2>/dev/null`, (error: any) => {
+      // Ignore errors
+    })
+    exec(`pkill -f "python.*mlx" 2>/dev/null`, (error: any) => {
       // Ignore errors
     })
     
