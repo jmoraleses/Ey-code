@@ -1,0 +1,120 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "local-coder/default_model",
+  "small_model": "local-coder/default_model",
+  "provider": {
+    "local-main": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local MLX Main",
+      "options": {
+        "baseURL": "http://localhost:8080/v1",
+        "apiKey": "local"
+      },
+      "models": {
+        "default_model": {
+          "name": "LiquidAI LFM2-350M (4bit MLX)",
+          "attachment": false,
+          "reasoning": false,
+          "temperature": true,
+          "tool_call": true,
+          "limit": {
+            "context": 32768,
+            "output": 2048
+          }
+        }
+      }
+    },
+    "local-coder": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local MLX Coder",
+      "options": {
+        "baseURL": "http://localhost:8081/v1",
+        "apiKey": "local"
+      },
+      "models": {
+        "default_model": {
+          "name": "LiquidAI LFM2.5-1.2B Instruct (4bit MLX)",
+          "attachment": false,
+          "reasoning": false,
+          "temperature": true,
+          "tool_call": true,
+          "limit": {
+            "context": 32768,
+            "output": 4096
+          }
+        }
+      }
+    },
+    "local-tools": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local MLX Agentic",
+      "options": {
+        "baseURL": "http://localhost:8082/v1",
+        "apiKey": "local"
+      },
+      "models": {
+        "default_model": {
+          "name": "LiquidAI LFM2-1.2B Tool (4bit MLX)",
+          "attachment": false,
+          "reasoning": false,
+          "temperature": true,
+          "tool_call": true,
+          "limit": {
+            "context": 16384,
+            "output": 2048
+          }
+        }
+      }
+    },
+    "local-math": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Local MLX Math",
+      "options": {
+        "baseURL": "http://localhost:8083/v1",
+        "apiKey": "local"
+      },
+      "models": {
+        "default_model": {
+          "name": "LiquidAI LFM2-350M Math (4bit MLX)",
+          "attachment": false,
+          "reasoning": false,
+          "temperature": true,
+          "tool_call": true,
+          "limit": {
+            "context": 32768,
+            "output": 4096
+          }
+        }
+      }
+    }
+  },
+  "agent": {
+    "coder": {
+      "model": "local-coder/default_model",
+      "prompt": "You are Ey-Code's coder agent. Read before editing. Make surgical, minimal changes. Cite file:line.",
+      "mode": "primary"
+    },
+    "researcher": {
+      "model": "local-main/default_model",
+      "prompt": "You are Ey-Code's research agent. Gather sources, cross-check facts, cite everything.",
+      "mode": "subagent"
+    },
+    "pentester": {
+      "model": "local-main/default_model",
+      "prompt": "You are Ey-Code's security agent. Only operate in ethical, authorized scope.",
+      "mode": "subagent"
+    },
+    "math": {
+      "model": "local-math/default_model",
+      "prompt": "You are Ey-Code's math specialist. Solve equations, perform calculations, and explain mathematical concepts clearly.",
+      "mode": "subagent"
+    }
+  },
+  "skills": {
+    "paths": [
+      "/Users/javier/Documents/.eycode/plugins"
+    ]
+  },
+  "autoupdate": false,
+  "share": "disabled"
+}
