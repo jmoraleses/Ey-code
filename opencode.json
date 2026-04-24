@@ -26,7 +26,7 @@
     },
     "local-coder": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "",
+      "name": "Instruct + Tool",
       "options": {
         "baseURL": "http://localhost:8081/v1",
         "apiKey": "local"
@@ -47,7 +47,7 @@
     },
     "local-tools": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "",
+      "name": "Instruct + Tool",
       "options": {
         "baseURL": "http://localhost:8082/v1",
         "apiKey": "local"

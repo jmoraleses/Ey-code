@@ -53,9 +53,9 @@ async function cleanupMemory() {
       global.gc()
     }
     // Kill MLX servers to free memory
-    const { exec } = require("child_process")
+    const { exec, spawn } = require("child_process")
     
-    // Kill processes on specific ports
+    // Kill processes on specific ports (main + lazy proxy backends)
     const ports = [8080, 8081, 8082, 8083, 18081, 18082, 18083]
     for (const port of ports) {
       exec(`lsof -ti:${port} | xargs kill -9 2>/dev/null`, (error: any) => {
@@ -63,14 +63,31 @@ async function cleanupMemory() {
       })
     }
     
-    // Kill all Python processes related to MLX (more comprehensive)
-    exec(`pkill -f "mlx_lm" 2>/dev/null`, (error: any) => {
+    // Kill all Python processes related to MLX (comprehensive cleanup)
+    exec(`pkill -9 -f "mlx_lm" 2>/dev/null`, (error: any) => {
       // Ignore errors
     })
-    exec(`pkill -f "lazy-mlx" 2>/dev/null`, (error: any) => {
+    exec(`pkill -9 -f "lazy-mlx" 2>/dev/null`, (error: any) => {
       // Ignore errors
     })
-    exec(`pkill -f "python.*mlx" 2>/dev/null`, (error: any) => {
+    exec(`pkill -9 -f "python.*mlx" 2>/dev/null`, (error: any) => {
+      // Ignore errors
+    })
+    exec(`pkill -9 -f "python.*8080" 2>/dev/null`, (error: any) => {
+      // Ignore errors
+    })
+    exec(`pkill -9 -f "python.*8081" 2>/dev/null`, (error: any) => {
+      // Ignore errors
+    })
+    exec(`pkill -9 -f "python.*8082" 2>/dev/null`, (error: any) => {
+      // Ignore errors
+    })
+    exec(`pkill -9 -f "python.*8083" 2>/dev/null`, (error: any) => {
+      // Ignore errors
+    })
+    
+    // Kill lazy-mlx.py specifically
+    exec(`pkill -9 -f "ey-code-lazy-mlx.py" 2>/dev/null`, (error: any) => {
       // Ignore errors
     })
     
@@ -98,6 +115,11 @@ process.on("SIGINT", async () => {
 })
 
 process.on("SIGTERM", async () => {
+  await cleanupMemory()
+  process.exit(0)
+})
+
+process.on("SIGHUP", async () => {
   await cleanupMemory()
   process.exit(0)
 })

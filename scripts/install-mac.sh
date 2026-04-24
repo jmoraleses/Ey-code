@@ -81,15 +81,13 @@ $USE_SUDO cp "$SCRIPT_DIR/download-models.sh" "$LIBEXEC/ey-code-download-models"
 $USE_SUDO chmod +x "$LIBEXEC/ey-code-download-models"
 $USE_SUDO ln -sf "$LIBEXEC/ey-code-download-models" "$PREFIX/ey-code-download-models"
 
-# 6) Global identity: AGENTS.md + skills live in ~/.config/ey-code
-GLOBAL_CONFIG="$HOME/.config/ey-code"
+# 6) Global identity: AGENTS.md + skills live in ~/.config/eycode
+GLOBAL_CONFIG="$HOME/.config/eycode"
 mkdir -p "$GLOBAL_CONFIG"
 cp "$PROJECT_DIR/AGENTS.md" "$GLOBAL_CONFIG/AGENTS.md"
 rm -rf "$GLOBAL_CONFIG/skills"
 cp -R "$PROJECT_DIR/skills" "$GLOBAL_CONFIG/skills"
-if [ ! -f "$GLOBAL_CONFIG/opencode.json" ]; then
-  cp "$PROJECT_DIR/opencode.json" "$GLOBAL_CONFIG/opencode.json"
-fi
+cp "$PROJECT_DIR/opencode.json" "$GLOBAL_CONFIG/opencode.json"
 
 # 7) Models directory (symlinked to project models/ if present, so downloads are shared)
 MODELS_LINK="$HOME/.local/share/ey-code/models"
