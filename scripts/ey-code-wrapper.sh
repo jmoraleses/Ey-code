@@ -12,14 +12,20 @@
 set -euo pipefail
 
 # Resolve the real binary (installed at libexec; fallback: project dist)
-PROJECT_DIR="$(dirname "$(dirname "$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")")")" 2>/dev/null || PROJECT_DIR=""
 REAL_BIN=""
 for candidate in \
     "$HOME/.local/libexec/ey-code-bin" \
-    "/usr/local/libexec/ey-code-bin" \
-    "$PROJECT_DIR/packages/opencode/dist/opencode-darwin-arm64/bin/opencode"; do
+    "/usr/local/libexec/ey-code-bin"; do
   if [ -x "$candidate" ]; then REAL_BIN="$candidate"; break; fi
 done
+
+# Only fallback to project dist if explicitly running from project directory
+if [ -z "$REAL_BIN" ]; then
+  PROJECT_DIR="$(dirname "$(dirname "$(readlink -f "$(dirname "${BASH_SOURCE[0]}")")")")" 2>/dev/null || PROJECT_DIR=""
+  if [ -n "$PROJECT_DIR" ] && [ -d "$PROJECT_DIR/packages/opencode/dist" ]; then
+    REAL_BIN="$PROJECT_DIR/packages/opencode/dist/opencode-darwin-arm64/bin/opencode"
+  fi
+fi
 
 if [ -z "$REAL_BIN" ]; then
   echo "ey-code: binary not found; run ./scripts/install-mac.sh" >&2
