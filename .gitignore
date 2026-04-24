@@ -2,6 +2,8 @@
 models/
 packages/opencode/dist/
 packages/*/dist/
+.memory/
+.github/
 
 .DS_Store
 node_modules
